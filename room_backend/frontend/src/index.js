@@ -1,6 +1,9 @@
 // src/index.js
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App'; // Adjust the path if necessary
+import { createRoot } from 'react-dom/client';
+import App from './components/App';
+ // Adjust the path if necessary
 
-ReactDOM.render(<App />, document.getElementById('app'));
+// Use createRoot in React 18
+const root = createRoot(document.getElementById('app'));
+root.render(<App name='samir' />);

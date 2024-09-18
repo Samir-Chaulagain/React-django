@@ -5,5 +5,7 @@ from .views import index
 
 urlpatterns = [
     path('', index),
+    path('join/', index),
+    path('create/', index),
      # Include hello app's URLs
 ]
