@@ -13,7 +13,8 @@ def generate_unique_code():
 # Create your models here
 # Room models .
 class Room(models.Model):
-    code=models.CharField(max_length=8, default="",unique=True)
+    code=models.CharField(max_length=8, default=generate_unique_code,unique=True)
+    # HANDLE HOST BY SESSION KEY
     host=models.CharField(max_length=50, unique=True)
     guest_pause=models.BooleanField(null=False, default=False)
     skip_votes=models.IntegerField(null=False,default=1)

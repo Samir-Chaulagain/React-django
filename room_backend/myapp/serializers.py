@@ -10,7 +10,10 @@ class RoomSerializer(serializers.ModelSerializer):
 
 # Send Post request to end-point,
 #Data Send in PayLoad 
-# class CreateRoomSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model =Room
-#         fields =("")
+
+#mAKE SERIALIZER  INCOMING ONE TO HANDE REQUEST OR TO oUTGOINIG  ONE TO HANDLE RESPONSE
+
+class CreateRoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =Room
+        fields =("skip_votes","guest_pause")
