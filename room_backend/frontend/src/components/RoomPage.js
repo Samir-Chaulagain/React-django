@@ -6,6 +6,6 @@ export default class RoomPage extends Component{
     }
     t
     render(){
-        return <h1>Hello Samir,Welcome to roomPage</h1>
+        return <h1>Hello Samir,Welcome to room</h1>
     }
 }
