@@ -1,27 +1,77 @@
-import React, { Component } from 'react';
-import CreateRoom from "./CreateRoom";
+import React, { Component } from "react";
 import RoomPage from "./RoomPage";
-import {
-    BrowserRouter as Router, Routes, Route
-} from "react-router-dom";
-import Room from './Room';
+import CreateRoom from "./CreateRoom";
+import Room from "./Room";
+import { Grid, Button, ButtonGroup, Typography } from "@mui/material";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 
 export default class HomePage extends Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      roomCode: null,
+    };
+    this.clearRoomCode = this.clearRoomCode.bind(this);
+  }
 
-    render() {
-        return (
-            <Router>
-                <Routes>
-                    <Route path="/" element={<h1>This is home page</h1>} />
-                    <Route path="/join" element={<RoomPage />} />
-                    <Route path="/create" element={<CreateRoom />} />
-                    <Route path="/room/:roomCode" element={<Room />} />
+  async componentDidMount() {
+    fetch("/api/user-in-room")
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          roomCode: data.code,
+        });
+      });
+  }
 
-                </Routes>
-            </Router>
-        );
-    }
+  renderHomePage() {
+    return (
+      <Grid container spacing={3}>
+        <Grid item xs={12} align="center">
+          <Typography variant="h3">House Party</Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <ButtonGroup disableElevation variant="contained" color="primary">
+            <Button color="primary" to="/join" component={Link}>
+              Join a Room
+            </Button>
+            <Button color="secondary" to="/create" component={Link}>
+              Create a Room
+            </Button>
+          </ButtonGroup>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  clearRoomCode() {
+    this.setState({
+      roomCode: null,
+    });
+  }
+
+  render() {
+    return (
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              this.state.roomCode ? (
+                <Navigate to={`/room/${this.state.roomCode}`} />
+              ) : (
+                this.renderHomePage()
+              )
+            }
+          />
+          <Route path="/join" element={<RoomPage />} />
+          <Route path="/create" element={<CreateRoom />} />
+          <Route
+            path="/room/:roomCode"
+            element={<Room leaveRoomCallback={this.clearRoomCode} />}
+          />
+        </Routes>
+      </Router>
+    );
+  }
 }

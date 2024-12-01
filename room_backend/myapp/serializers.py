@@ -7,6 +7,12 @@ class RoomSerializer(serializers.ModelSerializer):
         fields = ('id','code','host','guest_pause','skip_votes','created_at')
 
 
+class UpdateRoomSerializer(serializers.ModelSerializer):
+    code = serializers.CharField(validators=[])
+
+    class Meta:
+        model = Room
+        fields = ('guest_pause', 'skip_votes', 'code')
 
 # Send Post request to end-point,
 #Data Send in PayLoad 
